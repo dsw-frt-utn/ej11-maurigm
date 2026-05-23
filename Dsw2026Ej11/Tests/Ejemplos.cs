@@ -110,6 +110,58 @@ internal class Ejemplos
     //Realizar una llamada a cada método definido en CasoLinq y mostar por consola según corresponda
     public static void EjemploLinq()
     {
+        Console.WriteLine("--- EJEMPLO LINQ --- \n");
 
+        List<Libro> todosLosLibros = Libro.CrearLista();
+        CasoLinq consultaLinq = new CasoLinq(todosLosLibros);
+
+        var primero = consultaLinq.GetPrimero();
+        Console.WriteLine($"1. Primer libro: {primero.Titulo} (ID: {primero.Id})");
+
+        var ultimo = consultaLinq.GetUltimo();
+        Console.WriteLine($"2. Último libro: {ultimo.Titulo} (ID: {ultimo.Id})");
+
+        Console.WriteLine($"3. Suma total de precios: {consultaLinq.GetTotalPrecios():C}");
+
+        decimal promedio = consultaLinq.GetPromedioPrecios();
+        Console.WriteLine($"4. Promedio de precios: {promedio:C}");
+
+        Console.WriteLine("\n5. Libros con ID mayor a 15 (Primeros 5 resultados):");
+        var listaIdMayor15 = consultaLinq.GetListById();
+        ImprimirMuestraLibros(listaIdMayor15, 5);
+
+        Console.WriteLine("\n6. Lista en formato Título - Moneda (Primeros 5 resultados):");
+        var listaCadenas = consultaLinq.GetLibros();
+        for (int i = 0; i < Math.Min(5, listaCadenas.Count); i++)
+        {
+            Console.WriteLine($"   * {listaCadenas[i]}");
+        }
+
+        var masCaro = consultaLinq.GetMayorPrecio();
+        Console.WriteLine($"\n7. Libro más caro: {masCaro.Titulo} ({masCaro.Precio:C})");
+
+        var masBarato = consultaLinq.GetMenorPrecio();
+        Console.WriteLine($"8. Libro más barato: {masBarato.Titulo} ({masBarato.Precio:C})");
+
+        Console.WriteLine($"\n9. Libros con precio mayor al promedio ({promedio:C}) (Primeros 5 resultados):");
+        var listaMayorPromedio = consultaLinq.GetMayorPromedio();
+        ImprimirMuestraLibros(listaMayorPromedio, 5);
+
+        Console.WriteLine("\n10. Libros ordenados por Título Z-A (Primeros 5 resultados):");
+        var listaOrdenada = consultaLinq.GetLibrosOrdenadosPorTituloDesc();
+        ImprimirMuestraLibros(listaOrdenada, 5);
+    }
+
+    private static void ImprimirMuestraLibros(List<Libro> libros, int cantidad)
+    {
+        int limite = Math.Min(cantidad, libros.Count);
+        for (int i = 0; i < limite; i++)
+        {
+            Console.WriteLine($"   [{libros[i].Id}] {libros[i].Titulo} - {libros[i].Precio:C}");
+        }
+        if (libros.Count > cantidad)
+        {
+            Console.WriteLine($"   ... y {libros.Count - cantidad} libros más.");
+        }
     }
 }
