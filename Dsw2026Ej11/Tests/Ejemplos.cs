@@ -80,7 +80,31 @@ internal class Ejemplos
     //Eliminar un alumno por clave y listar por consola los alumnos
     public static void EjemploDictionary()
     {
+        Console.WriteLine("--- EJEMPLO DICTIONARY --- \n");
 
+        CasoDictionary manejadorDiccionario = new CasoDictionary();
+
+        Alumno alumno1 = new Alumno(101, "Esteban lopez", 7.5);
+        Alumno alumno2 = new Alumno(102, "Jose Gallo", 8.9);
+        Alumno alumno3 = new Alumno(103, "Andres Berra", 6.2);
+
+        manejadorDiccionario.AgregarAlumno(alumno1);
+        manejadorDiccionario.AgregarAlumno(alumno2);
+        manejadorDiccionario.AgregarAlumno(alumno3);
+        
+        Console.WriteLine("\n--- Lista de Alumnos ---");
+        Listar(manejadorDiccionario.ObtenerDiccionario().Values.ToList());
+
+        Console.WriteLine("\n Buscar alumno con legajo 102");
+        Mostrar(manejadorDiccionario.BuscarPorClave(102));
+
+        Console.WriteLine("\n-> Buscar alumno con legajo 999...");
+        Mostrar(manejadorDiccionario.BuscarPorClave(999));
+
+        
+        Console.WriteLine("\n-> Eliminando al alumno con legajo 103...");
+        manejadorDiccionario.EliminarPorClave(103);
+        Listar(manejadorDiccionario.ObtenerDiccionario().Values.ToList());
     }
 
     //Realizar una llamada a cada método definido en CasoLinq y mostar por consola según corresponda
